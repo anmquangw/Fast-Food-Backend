@@ -21,6 +21,8 @@ class Cart extends BaseController {
               idFood: info._id,
               name: info.name,
               quantityInStock: info.quantity,
+              price: info.price,
+              img1: info.img1,
             };
           })
         );
