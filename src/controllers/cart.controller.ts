@@ -47,8 +47,10 @@ class Cart extends BaseController {
   public async add(req: any, res: Response): Promise<any> {
     const userInfo: IUserData = res.locals.payload;
     const idUser = userInfo._id;
-    const body: ISelect = req.body;
+    const body: ISelect = <ISelect>req.body;
 
+    if (!body.idFood) return super.failed(res, { error: "idFood is required" });
+    
     const oldData = await SelectModel.findOne({ idUser, idFood: body.idFood });
     if (oldData) body.quantity += oldData.quantity;
 
@@ -64,17 +66,6 @@ class Cart extends BaseController {
       .catch((error: any) => {
         return super.failed(res, { error });
       });
-
-    // new SelectModel({ ...body, idUser })
-    //   .save()
-    //   .then((data: any) => {
-    //     return super.success(res, {
-    //       data,
-    //     });
-    //   })
-    //   .catch((error: any) => {
-    //     return super.failed(res, { error });
-    //   });
   }
 
   public async update(req: any, res: Response): Promise<any> {

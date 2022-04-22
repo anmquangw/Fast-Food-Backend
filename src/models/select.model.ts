@@ -9,9 +9,9 @@ const selectSchema = new mongoose.Schema<ISelect>({
     required: [true, Message.NotInvalid],
   },
   idFood: {
+    required: [true, Message.NotInvalid],
     type: Schema.Types.ObjectId,
     ref: "Food",
-    required: [true, Message.NotInvalid],
   },
   quantity: { type: Number, required: [true, Message.NotInvalid] },
 });
