@@ -30,7 +30,7 @@ class Cart extends BaseController {
         data = data.map((item: any) => ({
           ...item._doc,
           ...foodList.find(
-            (food: any) => food.idFood.toString() === item.idFood.toString()
+            (food: any) => food?.idFood?.toString() === item?.idFood?.toString()
           ),
         }));
 
