@@ -8,6 +8,7 @@ import {
 
 import { IUserData, IOrder, IOrderStatus, ISelect } from "../interfaces";
 import messages from "../configs/messages";
+import { Console } from "console";
 
 class Order extends BaseController {
   public async list(req: any, res: Response): Promise<any> {
@@ -23,10 +24,30 @@ class Order extends BaseController {
         idOrder: { $in: orderIds },
       });
 
+      const foodIds = orderDetails.map((item: any) => item.idFood);
+      var foods = (await FoodModel.find({ _id: { $in: foodIds } })).map(
+        (item: any) => {
+          return {
+            ...item._doc,
+            price: item.price.toString(),
+          };
+        }
+      );
+
       const data = orders.map((item: any) => {
-        const orderDetail = orderDetails.filter(
+        const orderDetailc = orderDetails.filter(
           (od) => od?.idOrder?.toString() === item?._id?.toString()
         );
+        const orderDetail = orderDetailc.map((od: any) => {
+          const food = foods.find(
+            (f) => f._id.toString() === od.idFood.toString()
+          );
+          return {
+            ...od._doc,
+            ...{ name: food.name, price: food.price, img1: food.img1 },
+          };
+        });
+
         return { ...item._doc, orderDetail };
       });
 
@@ -75,8 +96,10 @@ class Order extends BaseController {
           status: HttpStatus.BAD_REQUEST,
         });
 
-      const food = await FoodModel.find();
       const cart = await SelectModel.find({ idUser });
+
+      const foodIds = cart.map((item: any) => item.idFood);
+      const food = await FoodModel.find({ _id: { $in: foodIds } });
 
       await cart.map(async (item: ISelect) => {
         await FoodModel.findByIdAndUpdate(
