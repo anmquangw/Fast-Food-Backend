@@ -14,6 +14,18 @@ class Banner extends BaseController {
       });
   }
 
+  public detail(req: any, res: Response): any {
+    const id: string = req.params.id;
+
+    BannerModel.findById(id)
+      .then((data: any) => {
+        return super.success(res, { data });
+      })
+      .catch((error: any) => {
+        return super.failed(res, { error });
+      });
+  }
+
   public create(req: any, res: Response): any {
     const body: IBanner = req.body;
 

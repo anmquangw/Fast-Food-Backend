@@ -8,6 +8,9 @@ class Banner extends RoutesAuth {
     // get list
     this.noAuth.get("/", BannerController.list);
 
+    // get detail
+    this.noAuth.get("/:id", BannerController.detail);
+
     // create
     this.adminAuth.post("/", BannerController.create);
 
