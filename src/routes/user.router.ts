@@ -8,6 +8,9 @@ class User extends RoutesAuth {
     // get list of user
     this.adminAuth.get("/", UserController.list);
     
+    // get list by role
+    this.adminAuth.get("/role/:id", UserController.listByRole);
+    
     // signup
     this.noAuth.post("/signup", UserController.signup);
 

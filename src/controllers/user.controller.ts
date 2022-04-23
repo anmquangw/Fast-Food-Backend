@@ -1,4 +1,9 @@
-import { BaseController, Response, HttpStatus, ErrorRequestHandler } from "../base/Controllers";
+import {
+  BaseController,
+  Response,
+  HttpStatus,
+  ErrorRequestHandler,
+} from "../base/Controllers";
 
 import { IUser, IUserData, IRePassword } from "../interfaces";
 import { User as UserModel } from "../models";
@@ -9,6 +14,18 @@ import messages from "../configs/messages";
 class User extends BaseController {
   public list(req: any, res: Response): any {
     UserModel.find()
+      .then((data: any) => {
+        return super.success(res, { data });
+      })
+      .catch((error: any) => {
+        return super.failed(res, { error });
+      });
+  }
+
+  public listByRole(req: any, res: Response): any {
+    const id: string = req.params.id;
+
+    UserModel.find({ role: id })
       .then((data: any) => {
         return super.success(res, { data });
       })
@@ -102,7 +119,7 @@ class User extends BaseController {
     const userInfo: IUserData = res.locals.payload;
     const id = userInfo._id;
     const { password, newPassword, rePassword }: IRePassword = req.body;
-    
+
     try {
       if (password !== rePassword)
         return super.failed(res, {
