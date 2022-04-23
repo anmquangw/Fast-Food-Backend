@@ -92,7 +92,7 @@ class User extends BaseController {
       id,
       [
         {
-          $set: { role },
+          $set: { role: String(role) },
         },
       ],
       { new: true }
