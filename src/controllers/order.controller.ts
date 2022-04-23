@@ -16,7 +16,19 @@ class Order extends BaseController {
     const userRole = userInfo.role;
     const query = userRole == "0" ? {} : { idUser };
     try {
-      const data = await OrderModel.find(query);
+      const orders = await OrderModel.find(query);
+
+      const orderIds = orders.map((item: any) => item._id);
+      const orderDetails = await OrderDetailModel.find({
+        idOrder: { $in: orderIds },
+      });
+
+      const data = orders.map((item: any) => {
+        const orderDetail = orderDetails.filter(
+          (od) => od?.idOrder?.toString() === item?._id?.toString()
+        );
+        return { ...item._doc, orderDetail };
+      });
 
       return super.success(res, { data });
     } catch (error) {
@@ -141,7 +153,7 @@ class Order extends BaseController {
         { new: true }
       );
     });
-    
+
     OrderDetailModel.deleteMany({ idOrder: id })
       .then(() => {
         OrderModel.findByIdAndRemove(id)
