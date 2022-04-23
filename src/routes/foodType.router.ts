@@ -9,6 +9,9 @@ class FoodType extends RoutesAuth {
     // get list
     this.noAuth.get("/", FoodTypeController.list);
 
+    // get detail
+    this.noAuth.get("/:id", FoodTypeController.detail);
+
     // create
     this.adminAuth.post("/", FoodTypeController.create);
 

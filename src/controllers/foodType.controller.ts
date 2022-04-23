@@ -13,18 +13,29 @@ class FoodType extends BaseController {
       });
   }
 
-  public create(req: any, res: Response): any {
-    return res.status(HttpStatus.OK).json({ data: req.user });
-    // const body: IFoodType = req.body;
+  public detail(req: any, res: Response): any {
+    const id: string = req.params.id;
 
-    // new FoodTypeModel(body)
-    //   .save()
-    //   .then((data: any) => {
-    //     return super.success(res, { data, status: HttpStatus.CREATED });
-    //   })
-    //   .catch((error: any) => {
-    //     return super.failed(res, { error });
-    //   });
+    FoodTypeModel.findById(id)
+      .then((data: any) => {
+        return super.success(res, { data });
+      })
+      .catch((error: any) => {
+        return super.failed(res, { error });
+      });
+  }
+
+  public create(req: any, res: Response): any {
+    const body: IFoodType = req.body;
+
+    new FoodTypeModel(body)
+      .save()
+      .then((data: any) => {
+        return super.success(res, { data, status: HttpStatus.CREATED });
+      })
+      .catch((error: any) => {
+        return super.failed(res, { error });
+      });
   }
 
   public update(req: any, res: Response): any {
