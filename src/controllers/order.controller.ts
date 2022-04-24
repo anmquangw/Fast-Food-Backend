@@ -60,16 +60,23 @@ class Order extends BaseController {
 
   public async getDetail(req: any, res: Response): Promise<any> {
     const id = req.params.id;
-
+    const userInfo: IUserData = res.locals.payload;
+    const idUser = userInfo._id;
+    const userRole = userInfo.role;
+    const query = userRole == "0" ? {} : { idUser };
     try {
-      const data = await OrderDetailModel.find({ idOrder: id });
-      return super.success(res, {
-        data,
+      const order: any = await OrderModel.findOne({ ...query, _id: id });
+
+      const orderDetails: any = await OrderDetailModel.find({
+        idOrder: id,
       });
+
+      const data = { ...order._doc, orderDetail: orderDetails };
+
+      return super.success(res, { data });
     } catch (error) {
-      return super.failed(res, {
-        error: <String>error,
-      });
+      console.log(error);
+      return super.failed(res, { error });
     }
   }
 
