@@ -21,4 +21,6 @@ export default {
   LockAccount: "Tài khoản đã bị khóa",
   NotEnoughMoney: "Không đủ tiền",
   PasswordNotMatch: "Mật khẩu không khớp",
+
+  YouDoNotHavePermission: "Bạn không có quyền thực hiện",
 };

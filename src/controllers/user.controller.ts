@@ -51,6 +51,45 @@ class User extends BaseController {
       });
   }
 
+  public signinAdmin(req: any, res: Response): any {
+    const { phone, password }: IUser = req.body;
+
+    UserModel.findOne({ phone })
+      .then((data: any) => {
+        if (!data)
+          return super.failed(res, {
+            error: messages.UserNotFound,
+            status: HttpStatus.NOT_FOUND,
+          });
+
+        if (data.comparePassword(password)) {
+          if (data.role === "1")
+            return super.failed(res, {
+              error: messages.YouDoNotHavePermission,
+              status: HttpStatus.UNAUTHORIZED,
+            });
+
+          if (data.role === "2")
+            return super.failed(res, {
+              error: messages.LockAccount,
+              status: HttpStatus.LOCKED,
+            });
+          return super.success(res, {
+            data: data.toObject(),
+            token: token.generate(data),
+          });
+        }
+
+        return super.failed(res, {
+          error: messages.WrongPassword,
+          status: HttpStatus.UNAUTHORIZED,
+        });
+      })
+      .catch((error: any) => {
+        return super.failed(res, { error });
+      });
+  }
+
   public signin(req: any, res: Response): any {
     const { phone, password }: IUser = req.body;
 
