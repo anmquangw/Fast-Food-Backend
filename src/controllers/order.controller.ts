@@ -162,25 +162,44 @@ class Order extends BaseController {
     }
   }
 
-  public updateStatus(req: any, res: Response): any {
+  public async updateStatus(req: any, res: Response): Promise<any> {
     const body: IOrderStatus = req.body;
     const id: string = req.params.id;
-
-    OrderModel.findByIdAndUpdate(
-      id,
-      [
-        {
-          $set: body,
-        },
-      ],
-      { new: true }
-    )
-      .then((data: any) => {
-        return super.success(res, { data });
-      })
-      .catch((error: any) => {
-        return super.failed(res, { error });
+    try {
+      const order: any = await OrderModel.findByIdAndUpdate(
+        id,
+        [
+          {
+            $set: body,
+          },
+        ],
+        { new: true }
+      );
+      const orderDetails: any = await OrderDetailModel.find({
+        idOrder: id,
       });
+      const foodIds = orderDetails.map((item: any) => item.idFood);
+      var foods = (await FoodModel.find({ _id: { $in: foodIds } })).map(
+        (item: any) => {
+          return {
+            ...item._doc,
+            price: item.price.toString(),
+          };
+        }
+      );
+      const orderDetail = orderDetails.map((od: any) => {
+        const food = foods.find(
+          (f) => f._id.toString() === od.idFood.toString()
+        );
+        return {
+          ...od._doc,
+          ...{ name: food.name, price: food.price, img1: food.img1 },
+        };
+      });
+      return super.success(res, { data: { ...order._doc, orderDetail } });
+    } catch (error) {
+      return super.failed(res, { error });
+    }
   }
 
   public async remove(req: any, res: Response): Promise<any> {
