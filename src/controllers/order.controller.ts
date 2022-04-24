@@ -70,10 +70,26 @@ class Order extends BaseController {
       const orderDetails: any = await OrderDetailModel.find({
         idOrder: id,
       });
+      const foodIds = orderDetails.map((item: any) => item.idFood);
+      var foods = (await FoodModel.find({ _id: { $in: foodIds } })).map(
+        (item: any) => {
+          return {
+            ...item._doc,
+            price: item.price.toString(),
+          };
+        }
+      );
+      const orderDetail = orderDetails.map((od: any) => {
+        const food = foods.find(
+          (f) => f._id.toString() === od.idFood.toString()
+        );
+        return {
+          ...od._doc,
+          ...{ name: food.name, price: food.price, img1: food.img1 },
+        };
+      });
 
-      const data = { ...order._doc, orderDetail: orderDetails };
-
-      return super.success(res, { data });
+      return super.success(res, { data: { ...order._doc, orderDetail } });
     } catch (error) {
       console.log(error);
       return super.failed(res, { error });
