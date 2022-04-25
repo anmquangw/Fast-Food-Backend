@@ -9,6 +9,9 @@ class Order extends RoutesAuth {
     // get list
     this.userAuth.get("/", OrderController.list);
 
+    // get list with user
+    this.userAuth.get("/user", OrderController.listWithUser);
+
     // get order detail
     this.userAuth.get("/:id", OrderController.getDetail);
 

@@ -4,6 +4,7 @@ import {
   Select as SelectModel,
   Order as OrderModel,
   OrderDetail as OrderDetailModel,
+  User as UserModel,
 } from "../models";
 
 import { IUserData, IOrder, IOrderStatus, ISelect } from "../interfaces";
@@ -49,6 +50,34 @@ class Order extends BaseController {
         });
 
         return { ...item._doc, orderDetail };
+      });
+
+      return super.success(res, { data });
+    } catch (error) {
+      console.log(error);
+      return super.failed(res, { error });
+    }
+  }
+
+  public async listWithUser(req: any, res: Response): Promise<any> {
+    const userInfo: IUserData = res.locals.payload;
+    const idUser = userInfo._id;
+    const userRole = userInfo.role;
+    const query = userRole == "0" ? {} : { idUser };
+    try {
+      const orders = await OrderModel.find(query);
+      const userIds = orders.map((item: any) => item.idUser);
+      const users = await UserModel.find({ _id: { $in: userIds } }).select(
+        "-password"
+      );
+      const data = orders.map((item: any) => {
+        const user: any = users.find(
+          (u) => u?._id?.toString() === item?.idUser?.toString()
+        );
+        return {
+          ...item._doc,
+          ...user._doc,
+        };
       });
 
       return super.success(res, { data });
