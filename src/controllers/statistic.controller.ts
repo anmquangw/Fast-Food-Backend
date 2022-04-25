@@ -144,6 +144,37 @@ class Statistic extends BaseController {
         return super.failed(res, { error });
       });
   }
+
+  public async detail(req: any, res: Response): Promise<any> {
+    try {
+      const ordersCount = await OrderModel.countDocuments();
+      const customersCount = (await OrderModel.distinct("idUser"))?.length;
+      // const customersCount = await UserModel.countDocuments({
+      //   role: "1",
+      // });
+      const ordersSum = await OrderModel.aggregate([
+        {
+          $group: {
+            _id: null,
+            sum: { $sum: "$sum" },
+          },
+        },
+      ]);
+      // const ordersQuantity = await OrderDetailModel.aggregate([
+      //   {
+      //     $group: {
+      //       _id: null,
+      //       quantity: { $sum: "$quantity" },
+      //     },
+      //   },
+      // ]);
+      return super.success(res, {
+        data: { ordersCount, customersCount, ordersSum },
+      });
+    } catch (error: any) {
+      return super.failed(res, { error });
+    }
+  }
 }
 
 export default new Statistic();

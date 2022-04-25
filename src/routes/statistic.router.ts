@@ -7,6 +7,9 @@ class Statistic extends RoutesAuth {
     super(dir);
     // get statistic year, date, time
     this.noAuth.get("/", StatisticController.list);
+
+    // get statistic count
+    this.noAuth.get("/detail", StatisticController.detail);
   }
 }
 
