@@ -16,6 +16,7 @@ const orderSchema = new mongoose.Schema<IOrder>(
       type: String,
       required: [true, Message.NotInvalid],
       default: "0",
+      enum: ["0", "1"],
     },
     idPayment: {
       type: Schema.Types.ObjectId,
@@ -25,6 +26,7 @@ const orderSchema = new mongoose.Schema<IOrder>(
       type: String,
       required: [true, Message.NotInvalid],
       default: "0",
+      enum: ["0", "1", "2", "3", "4"],
     },
   },
   {

@@ -147,7 +147,9 @@ class Statistic extends BaseController {
 
   public async detail(req: any, res: Response): Promise<any> {
     try {
-      const ordersCount = await OrderModel.countDocuments();
+      const ordersCount = await OrderModel.countDocuments({
+        statusShip: "3",
+      });
       const customersCount = (await OrderModel.distinct("idUser"))?.length;
       // const customersCount = await UserModel.countDocuments({
       //   role: "1",
