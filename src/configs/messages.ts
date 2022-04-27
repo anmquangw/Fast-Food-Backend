@@ -22,5 +22,5 @@ export default {
   NotEnoughMoney: "Không đủ tiền",
   PasswordNotMatch: "Mật khẩu không khớp",
 
-  YouDoNotHavePermission: "Bạn không có quyền thực hiện",
+  YouDoNotHavePermission: "Bạn là người dùng xin vui lòng đăng nhập trên app để tiếp tục",
 };
