@@ -40,7 +40,7 @@ class Cart extends BaseController {
       })
       .catch((error: any) => {
         console.log(error);
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -64,7 +64,7 @@ class Cart extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -90,7 +90,7 @@ class Cart extends BaseController {
       })
       .catch((error: any) => {
         console.log(error);
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -105,7 +105,7 @@ class Cart extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 }

@@ -9,7 +9,7 @@ class FoodType extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -21,7 +21,7 @@ class FoodType extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -34,7 +34,7 @@ class FoodType extends BaseController {
         return super.success(res, { data, status: HttpStatus.CREATED });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -55,7 +55,7 @@ class FoodType extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -67,7 +67,7 @@ class FoodType extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 }

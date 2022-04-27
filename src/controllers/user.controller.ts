@@ -18,7 +18,7 @@ class User extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -30,7 +30,7 @@ class User extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -47,7 +47,7 @@ class User extends BaseController {
         });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -86,7 +86,7 @@ class User extends BaseController {
         });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -119,7 +119,7 @@ class User extends BaseController {
         });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 

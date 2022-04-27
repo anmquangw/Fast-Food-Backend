@@ -10,7 +10,7 @@ class Sales extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -21,7 +21,7 @@ class Sales extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -33,7 +33,7 @@ class Sales extends BaseController {
         return super.success(res, { data: !data.length ? false : true });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -46,7 +46,7 @@ class Sales extends BaseController {
         return super.success(res, { data, status: HttpStatus.CREATED });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -67,7 +67,7 @@ class Sales extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -79,7 +79,7 @@ class Sales extends BaseController {
         return super.success(res, { data });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 }

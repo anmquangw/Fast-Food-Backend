@@ -141,7 +141,7 @@ class Statistic extends BaseController {
         });
       })
       .catch((error: any) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 
@@ -174,7 +174,7 @@ class Statistic extends BaseController {
         data: { ordersCount, customersCount, ordersSum },
       });
     } catch (error: any) {
-      return super.failed(res, { error });
+      return super.failed(res, { error: error.message });
     }
   }
 }

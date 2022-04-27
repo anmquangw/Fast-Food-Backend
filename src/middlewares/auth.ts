@@ -24,7 +24,7 @@ class Auth extends Token {
     try {
       const veryfied: any = super.verify(token);
       res.locals.payload = await UserModel.findById(veryfied._doc._id);
-    } catch (error) {
+    } catch (error: any) {
       return apiResponse.failed(res, {
         status: HttpStatus.UNAUTHORIZED,
         error,

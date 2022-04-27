@@ -53,9 +53,8 @@ class Order extends BaseController {
       });
 
       return super.success(res, { data });
-    } catch (error) {
-      console.log(error);
-      return super.failed(res, { error });
+    } catch (error: any) {
+      return super.failed(res, { error: error.message });
     }
   }
 
@@ -81,9 +80,9 @@ class Order extends BaseController {
       });
 
       return super.success(res, { data });
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      return super.failed(res, { error });
+      return super.failed(res, { error: error.message });
     }
   }
 
@@ -119,9 +118,9 @@ class Order extends BaseController {
       });
 
       return super.success(res, { data: { ...order._doc, orderDetail } });
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      return super.failed(res, { error });
+      return super.failed(res, { error: error.message });
     }
   }
 
@@ -186,8 +185,8 @@ class Order extends BaseController {
       await SelectModel.deleteMany({ idUser });
 
       return super.success(res, { data: { order, add: sumQty, orderDetail } });
-    } catch (error) {
-      return super.failed(res, { error });
+    } catch (error: any) {
+      return super.failed(res, { error: error.message });
     }
   }
 
@@ -226,8 +225,8 @@ class Order extends BaseController {
         };
       });
       return super.success(res, { data: { ...order._doc, orderDetail } });
-    } catch (error) {
-      return super.failed(res, { error });
+    } catch (error: any) {
+      return super.failed(res, { error: error.message });
     }
   }
 
@@ -259,7 +258,7 @@ class Order extends BaseController {
           });
       })
       .catch((error) => {
-        return super.failed(res, { error });
+        return super.failed(res, { error: error.message });
       });
   }
 }

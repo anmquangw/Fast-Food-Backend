@@ -37,7 +37,7 @@ foodSchema.set("toObject", {
       idFood: ret._id,
     }).exec();
     const foodType: any = await FoodTypeModel.findById(ret.idFoodType).exec();
-    ret.foodType = foodType.name;
+    ret.foodType = foodType?.name || "";
     return ret;
   },
 });
